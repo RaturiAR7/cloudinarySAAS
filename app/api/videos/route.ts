@@ -12,8 +12,12 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json(videos);
   } catch (error) {
-    return NextResponse.json({ error: "Error fetching videos" });
+    console.error("Error fetching videos:", error); // Log the error for debugging
+    return NextResponse.json(
+      { error: "Error fetching videos" },
+      { status: 500 }
+    );
   } finally {
-    await prisma.$disconnect;
+    await prisma.$disconnect(); // Correctly call the $disconnect method
   }
 }
